@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Taxi Demand Predictor</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="app-header">
+      <div class="logo">🚖</div>
+      <div class="title-group">
+        <h1>Taxi Demand Predictor</h1>
+        <p>Forecast taxi demand using Machine Learning</p>
+      </div>
+    </header>
+    <main class="app-main">
+      <section class="card form-card">
+        <h2>Enter Details</h2>
+        <form id="predictForm" autocomplete="off">
+          <div class="form-group">
+            <label for="city">City / Area</label>
+            <input
+              type="text"
+              id="city"
+              placeholder="e.g. Delhi - Connaught Place"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="datetime">Date & Time</label>
+            <input type="datetime-local" id="datetime" required />
+          </div>
+          <div class="two-cols">
+            <div class="form-group">
+              <label for="weather">Weather</label>
+              <select id="weather">
+                <option value="clear">Clear</option>
+                <option value="cloudy">Cloudy</option>
+                <option value="rainy">Rainy</option>
+                <option value="storm">Storm</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="traffic">Traffic Level</label>
+              <select id="traffic">
+                <option value="low">Low</option>
+                <option value="medium" selected>Medium</option>
+                <option value="high">High</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group checkbox-group">
+            <input type="checkbox" id="event" />
+            <label for="event">Special event in area (concert, match, etc.)</label>
+          </div>
+          <button type="submit" class="btn primary-btn">
+            Predict Demand
+          </button>
+        </form>
+      </section>
+      <section class="card result-card">
+        <h2>Prediction Result</h2>
+        <div id="status" class="status-badge status-idle">
+          Waiting for input…
+        </div>
+        <div class="result-grid">
+          <div class="result-box">
+            <span class="result-label">Demand Level</span>
+            <span id="demandLevel" class="result-value">—</span>
+          </div>
+          <div class="result-box">
+            <span class="result-label">Predicted Rides</span>
+            <span id="predictedDemand" class="result-value">—</span>
+          </div>
+          <div class="result-box">
+            <span class="result-label">Recommended Taxis</span>
+            <span id="taxisRequired" class="result-value">—</span>
+          </div>
+        </div>
+        <h3 class="chart-title">Hourly Demand (Next 6 Hours)</h3>
+        <canvas id="demandChart"></canvas>
+      </section>
+    </main>
+    <footer class="app-footer">
+      <p>
+        Built with <span>HTML</span>, <span>CSS</span>, <span>JavaScript</span> &amp;
+        <span>Machine Learning</span>.
+      </p>
+    </footer>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
