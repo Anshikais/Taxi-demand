@@ -1,14 +1,12 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import datetime as dt
-
 app = Flask(__name__)
 CORS(app)  # allow requests from frontend (browser)
-
 def preprocess(payload):
     dt_obj = dt.datetime.fromisoformat(payload["datetime"])
     hour = dt_obj.hour
-    day = dt_obj.weekday()  # 0 = Monday, 6 = Sunday
+    day = dt_obj.weekday() 
 
     weather = payload.get("weather", "clear")
     traffic = payload.get("traffic", "medium")
@@ -25,7 +23,6 @@ def preprocess(payload):
     # Adjust by day (weekend slightly higher)
     if day in (5, 6):  # Saturday, Sunday
         base *= 1.15
-
     # Adjust by weather
     if weather == "rainy":
         base *= 1.25
@@ -33,32 +30,25 @@ def preprocess(payload):
         base *= 1.4
     elif weather == "cloudy":
         base *= 1.05
-
     # Adjust by traffic
     if traffic == "high":
         base *= 1.2
     elif traffic == "low":
         base *= 0.9
-
     # Adjust if there is a special event
     if event:
         base *= 1.3
-
     return base
-
 @app.route("/predict", methods=["POST"])
 def predict():
     payload = request.get_json()
     estimated_demand = preprocess(payload)
-
     predicted_demand = int(round(estimated_demand))
     taxis_required = int(predicted_demand * 0.7)
-
     return jsonify(
         predicted_demand=predicted_demand,
         taxis_required=taxis_required
     )
-
 if __name__ == "__main__":
     app.run(debug=True)
 
